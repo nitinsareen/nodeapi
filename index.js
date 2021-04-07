@@ -15,7 +15,13 @@ let cities = [
 //Default get for cities
 router.get("/", function (req, res, next) {
   //res.send("Boston");
-  res.send(cities);
+  //res.status(200).send(cities);
+  res.status(200).json({
+    status: 200,
+    statusText: "OK",
+    message: "List of all cities",
+    data: cities,
+  });
 });
 
 //Configure the prefix for router
