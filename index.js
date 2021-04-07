@@ -44,6 +44,37 @@ router.get("/", function (req, res, next) {
   );
 });
 
+//Get city by ID
+//Default get for cities
+router.get("/:id", function (req, res, next) {
+  citiesRepo.getById(
+    req.params.id,
+    function (data) {
+      if (data) {
+        res.status(200).json({
+          status: 200,
+          statusText: "OK",
+          message: "Details for the city",
+          data: data,
+        });
+      } else {
+        res.status(404).send({
+          status: 404,
+          statusText: "City not found",
+          message: `City with ID - ${req.params.id} could not be found!`,
+          error: {
+            code: "NOT_FOUND",
+            message: `City with ID - ${req.params.id} could not be found!`,
+          },
+        });
+      }
+    },
+    function (err) {
+      next(err);
+    }
+  );
+});
+
 //Configure the prefix for router
 app.use("/api/v1", router);
 
