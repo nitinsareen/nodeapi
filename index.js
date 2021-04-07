@@ -17,18 +17,31 @@ let router = express.Router();
 // ];
 
 //Initialize cities array with module import
-let cities = citiesRepo.get();
+//let cities = citiesRepo.get();
 
 //Default get for cities
 router.get("/", function (req, res, next) {
   //res.send("Boston");
   //res.status(200).send(cities);
-  res.status(200).json({
-    status: 200,
-    statusText: "OK",
-    message: "List of all cities",
-    data: cities,
-  });
+  // res.status(200).json({
+  //   status: 200,
+  //   statusText: "OK",
+  //   message: "List of all cities",
+  //   data: cities,
+  // });
+  citiesRepo.get(
+    function (data) {
+      res.status(200).json({
+        status: 200,
+        statusText: "OK",
+        message: "List of all cities",
+        data: data,
+      });
+    },
+    function (err) {
+      next(err);
+    }
+  );
 });
 
 //Configure the prefix for router
